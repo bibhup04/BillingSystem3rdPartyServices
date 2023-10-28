@@ -1,111 +1,55 @@
-# ONESTOP-BILLING
+# Auth service
 
-This microservice contains subscription and billing entities and generates bills every 30 days.
+Microservice for authentication
 
 ### Contact Information
 - Name: Bibhu
 - Email: [bibhusunder.b@prodapt.com](mailto:bibhusunder.b@prodapt.com)
+- Version: v0.0.1
 
 ### Project Link
-- [Github Link](https://github.com/bibhup04/onestop/tree/main/onestop-billing)
+- [Github Link](https://github.com/bibhup04/onestop/tree/main/auth-service)
 
 ### Server Information
-Generated server URL: `http://localhost:8083`
+Generated server URL: `http://localhost:9898`
 
 ## Tags
 
-### Update controller
-It updates the account and payment status.
-
-### Subscription controller
-It keeps a record of subscriptions and creates bills.
+### Auth controller
+Allow users to login and register.
 
 ## Paths
 
-### /subscribe/update/status
+### /auth/token
 - Method: POST
-- Summary: Update Account Status
-- Description: This method gets called periodically and updates the account status from Active to Suspend or Terminate based on the payment status.
-- Operation ID: updateStatus
+- Summary: Login user
+- Description: User can login by providing a username and password in authRequest.
+- Operation ID: getToken
 
-### /subscribe/update/payment
+### /auth/register
 - Method: POST
-- Summary: Update Payment Status
-- Description: This method receives the details of the user and updates the payment status to paid.
-- Operation ID: receiveCollectionDTO
+- Summary: Register user
+- Description: User can register by providing user credentials.
+- Operation ID: addNewUser
 
-### /subscribe/plan
-- Method: POST
-- Summary: Subscribe plans
-- Description: Receives user and plan details and adds those details to the database.
-- Operation ID: subscribePlan
-
-### /subscribe/end/subscription
-- Method: POST
-- Summary: End Subscription
-- Description: This method ends the subscription for the given user.
-- Operation ID: endSubscribedPlan
-
-### /subscribe/create-invoice
-- Method: POST
-- Summary: Create Invoice
-- Description: This method sends the GenerateInvoiceDTO to the invoice service to generate an invoice.
-- Operation ID: createInvoice
-
-### /subscribe/user/subscription
+### /auth/userId
 - Method: GET
-- Summary: Display Subscription
-- Description: This method displays the subscribed plan of the logged-in user.
-
-### /subscribe/user/bill
-- Method: GET
-- Summary: Display Bill
-- Description: This method displays the last bill of the user.
-
-### /subscribe/bill
-- Method: GET
-- Summary: Generate Bills
-- Description: This method generates a bill when a user ends a subscription manually.
-
-### /subscribe/all
-- Method: GET
-- Operation ID: getAllSubscriptions
+- Operation ID: home
 
 ## Schemas
 
-### CollectionDTO
-- subscriptionId (integer)
-- userId (integer)
-- amountCollected (number)
-- billId (integer)
+### AuthRequest
+- username (string)
+- password (string)
 
-### SubscribeDTO
-- familyId (integer)
-- userId (integer)
-- planId (integer)
-- finalPrice (number)
+### TokenDTO
+- token (string)
 
-### Subscription
-- subscriptionId (integer)
-- familyId (integer)
-- userId (integer)
-- planId (integer)
-- finalPrice (number)
-- createdAt (string, date-time)
-- endDate (string, date-time)
+### UserCredential
+- id (integer)
+- name (string)
+- email (string)
+- phoneNo (string)
+- password (string)
+- role (string)
 - status (string)
-- autoRenewal (boolean)
-
-### GenerateInvoiceDTO
-- billId (integer)
-- userId (integer)
-- planId (integer)
-- finalPrice (number)
-
-### Billing
-- billingId (integer)
-- subscriptionId (integer)
-- userId (integer)
-- createdAt (string, date-time)
-- amount (number)
-- paymentStatus (string)
